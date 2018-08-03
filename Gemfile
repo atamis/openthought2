@@ -18,6 +18,7 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'devise-i18n'
 gem 'devise'
 gem 'high_voltage'
 gem 'pg'
@@ -30,6 +31,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'rspec-rails'
+  gem 'capybara'
 end
 group :test do
   gem 'database_cleaner'
