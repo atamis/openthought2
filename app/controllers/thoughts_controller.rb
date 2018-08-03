@@ -1,11 +1,12 @@
 class ThoughtsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_thought, only: [:show, :edit, :update, :destroy]
+  before_action :authorized, except: [:index, :create, :new]
 
   # GET /thoughts
   # GET /thoughts.json
   def index
-    @thoughts = Thought.all
+    @thoughts = current_user.thoughts.all
   end
 
   # GET /thoughts/1
@@ -15,7 +16,7 @@ class ThoughtsController < ApplicationController
 
   # GET /thoughts/new
   def new
-    @thought = Thought.new
+    @thought = current_user.thoughts.new
   end
 
   # GET /thoughts/1/edit
@@ -25,7 +26,7 @@ class ThoughtsController < ApplicationController
   # POST /thoughts
   # POST /thoughts.json
   def create
-    @thought = Thought.new(thought_params)
+    @thought = current_user.thoughts.new(thought_params)
 
     respond_to do |format|
       if @thought.save
@@ -72,4 +73,12 @@ class ThoughtsController < ApplicationController
     def thought_params
       params.require(:thought).permit(:body)
     end
+
+    def authorized
+      unless current_user.id == Thought.find(params[:id]).user_id
+        flash[:error] = "Not your thought"
+        redirect_to thoughts_url
+      end
+    end
+
 end
