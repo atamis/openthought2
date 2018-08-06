@@ -5,5 +5,10 @@
   <%= @thought.body %>
 </p>
 
+<p>
+  <strong>Tags:</strong>
+  <%= @thought.tag_list %>
+</p>
+
 <%= link_to 'Edit', edit_thought_path(@thought) %> |
 <%= link_to 'Back', thoughts_path %>

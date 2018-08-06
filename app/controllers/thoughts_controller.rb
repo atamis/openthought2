@@ -1,12 +1,17 @@
 class ThoughtsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_thought, only: [:show, :edit, :update, :destroy]
-  before_action :authorized, except: [:index, :create, :new]
+  before_action :authorized, except: [:index, :create, :new, :by_tag]
 
   # GET /thoughts
   # GET /thoughts.json
   def index
     @thoughts = current_user.thoughts.all
+  end
+
+  def by_tag
+    @thoughts = current_user.thoughts.tagged_with(params[:name])
+    render "thoughts/index"
   end
 
   # GET /thoughts/1

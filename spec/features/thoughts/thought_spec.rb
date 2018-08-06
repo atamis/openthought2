@@ -35,6 +35,16 @@ feature "Thoughts", :devise do
       expect(page).to have_content("Thought was successfully destroyed.")
       expect { t.reload }.to raise_error ActiveRecord::RecordNotFound
     end
+
+    scenario "user wants to find all thoughts of a given tag" do
+      t = @user.thoughts.new(body: "special thought #asdf #tag1")
+      t.save!
+      visit by_tag_path("asdf")
+      expect(page).to have_content("special thought #asdf #tag1")
+
+      visit by_tag_path("tag1")
+      expect(page).to have_content("special thought #asdf #tag1")
+    end
   end
 
   context "user changing other user's thoughts" do
