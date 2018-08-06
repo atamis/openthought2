@@ -29,4 +29,17 @@ RSpec.describe Thought, type: :model do
     t = Thought.new(body: "asdfasdf")
     expect(t).to_not be_valid
   end
+
+  it "should respond to tags" do
+    expect(@thought).to respond_to(:tags)
+    expect(@thought).to respond_to(:tag_list)
+  end
+
+  it "should add tags from the body" do
+    t = @user.thoughts.new(body: "test #tag1 #tag2")
+    t.save!
+    t.reload
+    expect(t.tag_list).to include("tag1")
+    expect(t.tag_list).to include("tag2")
+  end
 end
