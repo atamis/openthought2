@@ -37,3 +37,5 @@ group :test do
   gem 'database_cleaner'
   gem 'launchy'
 end
+
+gem 'acts-as-taggable-on', '~> 6.0'
